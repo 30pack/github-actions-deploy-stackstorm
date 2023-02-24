@@ -6,6 +6,7 @@ resource "aws_instance" "server" {
  
  subnet_id                   = var.create_vpc == "true" ? aws_subnet.public.*.id[0] : null
  vpc_security_group_ids      = [aws_security_group.allow_http.id, aws_security_group.allow_https.id, aws_security_group.allow_ssh.id]
+ user_data_replace_on_change = true
  user_data = <<EOF
 #!/bin/bash
 echo "symlink for python3 -> python"
@@ -15,9 +16,9 @@ EOF
    Name = "${var.aws_resource_identifier}"
  }
 
-  lifecycle {
-    create_before_destroy = true
-  }
+  # lifecycle {
+  #   create_before_destroy = true
+  # }
 }
 
 output "ec2_public_dns" {
