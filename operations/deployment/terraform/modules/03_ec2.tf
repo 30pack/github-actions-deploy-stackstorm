@@ -14,6 +14,10 @@ EOF
  tags = {
    Name = "${var.aws_resource_identifier}"
  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 output "ec2_public_dns" {
